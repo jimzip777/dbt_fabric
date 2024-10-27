@@ -1,0 +1,16 @@
+dbt_fabric_test:
+  outputs:
+    dev:
+      auth: CLI
+      connect_retries: 0
+      connect_timeout: 10
+      endpoint: https://api.fabric.microsoft.com/v1
+      lakehouse: LH_test
+      lakehouseid: 40baeaa8-9d7c-4db3-b557-837994bc7158
+      method: livy
+      schema: test
+      tenant_id: abc
+      threads: 1
+      type: fabricspark
+      workspaceid: 8ac0a7a2-b0da-43af-afe3-3626f402bf31
+  target: dev
