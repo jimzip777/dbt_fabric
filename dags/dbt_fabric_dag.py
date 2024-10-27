@@ -19,16 +19,7 @@ with DAG(
     start_date=datetime(2020, 12, 23),
     description="A sample Airflow DAG to invoke dbt runs using a BashOperator",
     schedule_interval=None,
-    catchup=False,
-    default_args={
-        "env": {
-            "DBT_USER": "{{ conn.postgres.login }}",
-            "DBT_ENV_SECRET_PASSWORD": "{{ conn.postgres.password }}",
-            "DBT_HOST": "{{ conn.postgres.host }}",
-            "DBT_SCHEMA": "{{ conn.postgres.schema }}",
-            "DBT_PORT": "{{ conn.postgres.port }}",
-        }
-    },
+    catchup=False
 ) as dag:
     # This task loads the CSV files from dbt/data into the local postgres database for the purpose of this demo.
     # In practice, we'd usually expect the data to have already been loaded to the database.
