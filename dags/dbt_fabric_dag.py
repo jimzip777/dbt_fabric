@@ -3,7 +3,7 @@ from pathlib import Path
 from datetime import datetime
 from cosmos import DbtDag, ProjectConfig, ProfileConfig, ExecutionConfig
 
-DEFAULT_DBT_ROOT_PATH = Path(__file__).parent.parent / "dags" / "dbt"
+DEFAULT_DBT_ROOT_PATH = Path(__file__).parent / "dags" / "dbt"
 DBT_ROOT_PATH = Path(os.getenv("DBT_ROOT_PATH", DEFAULT_DBT_ROOT_PATH))
 profile_config = ProfileConfig(
      profile_name="dbt_fabric_test",
