@@ -47,4 +47,4 @@ with DAG(
         bash_command=f"dbt test --profiles-dir {DBT_PROJECT_DIR} --project-dir {DBT_PROJECT_DIR}",
     )
 
-    dbt_seed >> dbt_run >> dbt_test
+    dbt_run
