@@ -22,19 +22,6 @@
 # CELL ********************
 
 # MAGIC %%bash
-# MAGIC 
-# MAGIC pip install azure-cli dbt-core dbt-fabric
-
-# METADATA ********************
-
-# META {
-# META   "language": "python",
-# META   "language_group": "synapse_pyspark"
-# META }
-
-# CELL ********************
-
-# MAGIC %%bash
 # MAGIC git clone https://github.com/dbt-labs/jaffle-shop-classic/
 
 # METADATA ********************
@@ -48,7 +35,7 @@
 
 # MAGIC %%bash
 # MAGIC cd jaffle-shop-classic
-# MAGIC rm ./profiles.yml
+# MAGIC # rm ./profiles.yml
 # MAGIC touch ./profiles.yml
 # MAGIC echo 'config:' >> ./profiles.yml
 # MAGIC echo '  partial_parse: true'  >> ./profiles.yml
@@ -66,19 +53,6 @@
 # MAGIC echo "      database: WH_test" >> ./profiles.yml
 # MAGIC echo "      client_id: 9acf00a5-b63c-4689-99ad-33eab21eabac" >> ./profiles.yml
 # MAGIC echo "      client_secret: C338Q~Nys15WtW4jolfkB7mMIr7OE.70zLWRLaVb" >> ./profiles.yml
-
-# METADATA ********************
-
-# META {
-# META   "language": "python",
-# META   "language_group": "synapse_pyspark"
-# META }
-
-# CELL ********************
-
-# MAGIC %%bash
-# MAGIC cd jaffle-shop-classic
-# MAGIC dbt debug --profile jaffle_shop
 
 # METADATA ********************
 
@@ -115,8 +89,17 @@
 
 # CELL ********************
 
-import shutil
-shutil.copytree("/jaffle-shop-classic/logs", "/lakehouse/logs_1")
+# copy dbt log file to lakehouse and print in notebook
+path = !pwd
+source_path=path[0] + "/jaffle-shop-classic/logs/dbt.log"
+destination_file_path = "Files/dbt_logs_1/dbt.log"
+
+
+with open(source_file_path, 'r') as source_file:
+    content = source_file.read()  # Read all content
+
+notebookutils.fs.put(destination_file_path, content, True)
+print(content)
 
 # METADATA ********************
 
@@ -127,51 +110,6 @@ shutil.copytree("/jaffle-shop-classic/logs", "/lakehouse/logs_1")
 
 # CELL ********************
 
-# MAGIC %%bash
-# MAGIC 
-# MAGIC az --version
-
-# METADATA ********************
-
-# META {
-# META   "language": "python",
-# META   "language_group": "synapse_pyspark"
-# META }
-
-# CELL ********************
-
-
-# METADATA ********************
-
-# META {
-# META   "language": "python",
-# META   "language_group": "synapse_pyspark"
-# META }
-
-# CELL ********************
-
-# Copies the file (or folder) from Notebook resources.
-# You can copy the Lakehouse ABFS path from the contextual menu of any Lakehouse folder.
-notebookutils.fs.cp(
-"file:///synfs/nb_resource/builtin/test (3).txt",
-"abfss://8ac0a7a2-b0da-43af-afe3-3626f402bf31@onelake.dfs.fabric.microsoft.com/40baeaa8-9d7c-4db3-b557-837994bc7158/Files/dbt_logs_1",       # Target Lakehouse ABFS path
-True        # Recursive?
-)
-
-
-# METADATA ********************
-
-# META {
-# META   "language": "python",
-# META   "language_group": "synapse_pyspark"
-# META }
-
-# CELL ********************
-
-import pandas as pd
-# Load data into pandas DataFrame from f"{notebookutils.nbResPath}/builtin/test (3).txt"
-df =  pd.read_csv(f"{notebookutils.nbResPath}/builtin/test (3).txt", sep="\\s+")
-display(df)
 
 # METADATA ********************
 
